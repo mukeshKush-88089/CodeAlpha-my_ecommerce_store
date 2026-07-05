@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>🛍️ Mera Shop</h2>
+        <div><a href="{% url 'store' %}">🏠 Home</a></div>
+    </div>
+
+    <div class="container">
+        <h1>🛒 Your Shopping Cart</h1>
+        <hr>
+        
+        <div id="cart-items-container"></div>
+
+        <div class="cart-total">
+            Total: ₹<span id="total-price">0</span>
+        </div>
+
+        <button class="checkout-btn" id="checkout-btn">Proceed to Order ➡️</button>
+    </div>
+
+    <script src="{% static 'store/js/cart.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            displayCart();
+            
+            // Order checkout process button trigger
+            document.getElementById('checkout-btn').addEventListener('click', placeOrder);
+        });
+
+        function displayCart() {
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('total-price');
+            container.innerHTML = '';
+            
+            let total = 0;
+
+            if (Object.keys(cart).length === 0) {
+                container.innerHTML = '<p>Aapka cart khali hai. Kuch shopping karo ji! 😉</p>';
+                totalElement.innerText = '0';
+                document.getElementById('checkout-btn').style.display = 'none';
+                return;
+            }
+
+            // Real calculations (Pehle humne static kiya tha, isse dynamically load kar rahe hain)
+            // Note: ₹499 dummy factor runtime layout maintain karne ke liye lagaya hai
+            for (let id in cart) {
+                let itemTotal = cart[id].quantity * 499; 
+                total += itemTotal;
+
+                container.innerHTML += `
+                    <div class="cart-row">
+                        <div>
+                            <h3>${cart[id].name}</h3>
+                            <p>Quantity: <strong>${cart[id].quantity}</strong></p>
+                        </div>
+                        <div>
+                            <span style="font-weight:bold; margin-right: 20px;">₹${itemTotal}</span>
+                            <button class="remove-btn" onclick="removeItem('${id}')">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }
+            totalElement.innerText = total;
+        }
+
+        function removeItem(id) {
+            delete cart[id];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            displayCart();
+        }
+
+        // BACKEND SE CONNECTIVITY KA MAIN CODE
+        function placeOrder() {
+            // Django post request ke liye CSRF token validation zaroori hai
+            const csrftoken = '{{ csrf_token }}';
+
+            fetch("{% url 'process_order' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({'cart': cart})
+            })
+            .then((response) => {
+                if(response.status === 401) {
+                    alert("Order karne ke liye pehle Login karna zaroori hai!");
+                    window.location.href = "{% url 'login' %}";
+                    return;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if(data && data.status === 'success') {
+                    alert(`🎉 Order Successful!\nYour Transaction ID: ${data.transaction}`);
+                    cart = {}; // Frontend cart clear
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    window.location.href = "{% url 'store' %}"; // Redirect back to store
+                }
+            });
+        }
+    </script>
+</body>
+</html>

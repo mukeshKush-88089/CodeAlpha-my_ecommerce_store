@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Details</title>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>🛍️ Mera Shop</h2>
+        <div><a href="{% url 'store' %}">Home</a> | <a href="{% url 'cart' %}">🛒 Cart (<span id="cart-count">0</span>)</a></div>
+    </div>
+
+    <div class="detail-container">
+        <a href="{% url 'store' %}" class="back-btn">⬅️ Back to Products</a>
+        
+        {% if product.image_url %}
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="detail-image">
+        {% endif %}
+
+        <h1>{{ product.name }}</h1>
+        <hr>
+        <p><strong>Description:</strong></p>
+        <p>{{ product.description }}</p>
+        <p class="price">₹{{ product.price }}</p>
+        <p><strong>Stock Available:</strong> {{ product.stock }}</p>
+        <button class="btn add-btn" data-product="{{ product.id }}" data-name="{{ product.name }}">Add to Cart</button>
+    </div>
+
+    <script src="{% static 'store/js/cart.js' %}"></script>
+</body>
+</html>

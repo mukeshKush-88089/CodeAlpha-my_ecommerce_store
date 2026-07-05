@@ -1,0 +1,249 @@
+/* store/static/store/css/style.css */
+
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background: #232f3e;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar h2 {
+    margin: 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Store Front / Homepage */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.product-container {
+    display: flex;
+    gap: 25px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* style.css mein product-card aur uske andar ke items ko aise update karein */
+
+.product-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    width: 220px;
+    text-align: center;
+    transition: transform 0.2s;
+    
+    /* ---- YE LINES ADD KI HAIN ALIGNMENT KE LIYE ---- */
+    display: flex;
+    flex-direction: column; /* Saara content upar se neeche ek line mein rahega */
+    justify-content: flex-start;
+}
+
+/* Taki description aur headings ke baad bachi hui jagah automatic fill ho jaye */
+.product-card h3 {
+    margin: 10px 0 5px 0;
+    font-size: 18px;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: #555;
+    flex-grow: 1; /* Ye text waale area ko stretch karega jisse space barabar ho jaye */
+    margin-bottom: 15px;
+}
+
+.product-card h4 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+}
+
+/* Button automatically card ke bottom mein lock ho jayega */
+.product-card .btn {
+    margin-top: auto; /* Magic line: Isse saare buttons same bottom line par aa jayenge */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card h3 a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.product-card h3 a:hover {
+    color: #0056b3;
+}
+
+/* Product Detail Page Specific */
+.detail-container {
+    background: white;
+    padding: 40px;
+    max-width: 700px;
+    margin: 50px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.price {
+    color: #b12704;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* Buttons */
+.btn {
+    background: #ffd814;
+    border: 1px solid #fcd200;
+    color: #0f1111;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #f7ca00;
+}
+
+/* style.css ke end mein yeh add karein */
+
+/* Cart Page Styles */
+.cart-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.cart-total {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.remove-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.remove-btn:hover {
+    background: #bd2130;
+}
+
+.checkout-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    float: right;
+    margin-top: 15px;
+}
+
+/* style.css ke andar ye lines add karein */
+
+/* Homepage card image styling */
+.product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: contain; /* Isse image stretch ya kharab nahi hogi */
+    margin-bottom: 15px;
+    background-color: #fcfcfc;
+    border-radius: 4px;
+}
+
+/* Detail page image styling */
+.detail-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+/* style.css ke end mein add karein */
+
+.auth-container {
+    background: white;
+    padding: 30px;
+    max-width: 400px;
+    margin: 60px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Django default form paragraph styling */
+.auth-container p {
+    margin-bottom: 15px;
+}
+
+.auth-container input[type="text"], 
+.auth-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.auth-links {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+}

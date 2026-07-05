@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mera E-Commerce Store</title>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>🛍️ Mera Shop</h2>
+        <div>
+            {% if user.is_authenticated %}
+                <span style="color: white; margin-right: 15px;">Hello, <strong>{{ user.username }}</strong>!</span>
+                <a href="{% url 'logout' %}" style="margin-right: 15px; color: #ff9900;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="margin-right: 15px;">Login</a>
+                <a href="{% url 'register' %}" style="margin-right: 15px;">Register</a>
+            {% endif %}
+            <a href="{% url 'cart' %}">🛒 Cart (<span id="cart-count">0</span>)</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Our Products</h1>
+        <div class="product-container">
+            {% for product in products %}
+            <div class="product-card">
+                {% if product.image_url %}
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image">
+                {% else %}
+                    <img src="https://via.placeholder.com/200x180?text=No+Image" alt="No Image" class="product-image">
+                {% endif %}
+
+                <h3><a href="{% url 'product_detail' product.id %}">{{ product.name }}</a></h3>
+                <p>{{ product.description|truncatewords:10 }}</p>
+                <h4>₹{{ product.price }}</h4>
+                <button class="btn add-btn" data-product="{{ product.id }}" data-name="{{ product.name }}">Add to Cart</button>
+            </div>
+            {% empty %}
+            <p>No products available yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="{% static 'store/js/cart.js' %}"></script>
+</body>
+</html>
